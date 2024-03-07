@@ -11,5 +11,26 @@ endif()
 
 project ("Beta_Engine")
 
+file(GLOB_RECURSE Beta_EngineSources Beta_Engine/*.cpp Beta_Engine/*.h)
+add_executable(BetaEngine ${Beta_EngineSources})
+
 # Include sub-projects.
-add_subdirectory ("Beta_Engine")
+add_subdirectory(third_party/glfw EXCLUDE_FROM_ALL)
+add_subdirectory(third_party/GLAD EXCLUDE_FROM_ALL)
+add_subdirectory(third_party/glm EXCLUDE_FROM_ALL)
+
+# stb_image
+add_library(stb EXCLUDE_FROM_ALL third_party/stb/stb_image.h third_party/stb/stb_image.cpp)
+include_directories(stb third_party/stb)
+
+#setting up the references for the Beta Engine project this means 
+#the Beta Engine project will reference glfw and glad
+target_link_libraries(BetaEngine PRIVATE glfw glad glm stb )
+
+# set a symlink to the assets dir
+add_custom_command(
+        TARGET BetaEngine PRE_BUILD COMMAND
+        ${CMAKE_COMMAND} -E create_symlink
+        ${CMAKE_SOURCE_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/assets
+)
+
