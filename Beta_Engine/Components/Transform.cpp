@@ -3,7 +3,8 @@
 Transform::Transform(vec3& position, vec3& rot, vec3& scale):
 	position(position),
 	eulerRotation(rot),
-	scale(scale) {
+	scale(scale)
+{
 
 }
 
@@ -22,6 +23,8 @@ mat4 Transform::getLocalMatrix() {
 
 }
 
-void Transform::updateGraph() {
-
-}
+//void Transform::updateSelfAndChilds() {
+//	if (root->parent) {
+//
+//	}
+//}

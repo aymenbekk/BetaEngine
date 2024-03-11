@@ -1,7 +1,7 @@
 #include "Engine.h"
 
 
-Engine::Engine(vector<Entity*>& scenes,Window& window):scenes(scenes),window(window) {
+Engine::Engine(vector<Entity*>& scenes, Window& window, Renderer& renderer, vector<pair<const char*, const char*>>& shadersPaths):scenes(scenes),window(window),renderer(renderer),shadersPaths(shadersPaths) {
 	
 }
 
@@ -16,16 +16,32 @@ void Engine::init() {
 		return;
 	}
 	window.swapBuffers(0.07f, 0.13f, 0.17f, 1.0f);
+	cout << "dkhalna" << endl;
+	
+
+	for (const auto& pair : shadersPaths) {
+
+		cout << "first pair" << pair.first << "scond" << pair.second << endl;
+		Shader shaderProgram(pair.first, pair.second);
+		shaders.push_back(&shaderProgram);
+	}
+
 }
 
 
 void Engine::start(){
+	
 
+	glEnable(GL_DEPTH_TEST);
 	while (isRuning()) {
 
 		window.processInput();
 		window.swapBuffers(0.07f, 0.13f, 0.17f, 1.0f);
 
+		renderer.getCamera()->Inputs(window.get_GLFW_Window());
+		for (Entity* root : scenes) {
+			renderer.RenderScene(root,shaders);
+		}
 		window.checkEvents();
 	}
 

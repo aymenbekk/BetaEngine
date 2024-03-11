@@ -2,9 +2,11 @@
 
 string get_file_contents(const char* filename)
 {
+	cout << filename << endl;
 	ifstream in(filename, ios::binary);
 	if (in)
 	{
+		cout << "ccc" << endl;
 		string contents;
 		in.seekg(0, std::ios::end);
 		contents.resize(in.tellg());
@@ -13,10 +15,13 @@ string get_file_contents(const char* filename)
 		in.close();
 		return(contents);
 	}
-	throw(errno);
+	throw std::runtime_error("Failed to open file: " + std::string(filename));
 }
 
 Shader::Shader (const char* vertexFile, const char* fragmentFile){
+
+	cout << "dkhalna" << endl;
+
 	string vertexCode = get_file_contents(vertexFile);
 	string fragmentCode = get_file_contents(fragmentFile);
 
@@ -24,6 +29,11 @@ Shader::Shader (const char* vertexFile, const char* fragmentFile){
 	const char* vertexSource = vertexCode.c_str();
 	const char* fragmentSource = fragmentCode.c_str();
 
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+		
+	}
 
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 

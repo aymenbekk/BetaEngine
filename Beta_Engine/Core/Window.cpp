@@ -1,28 +1,29 @@
 #include "Window.h"
 
 
-Window::Window(int width, int Height, const char* title) : width(width),height(Height),title(title) {
+Window::Window(int width, int Height,  char* title,Camera& camera) : width(width),height(Height),title(title),camera(camera) {
 
 
 }
 
 
 int Window::create() {
+	cout << "Here Creat" << endl;
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = get_GLFW_Window();
-	window = glfwCreateWindow(width, height, title, NULL, NULL);
-	if (window == NULL)
+	//GLFWwindow* window = get_GLFW_Window();
+	set_GLFW_Window (glfwCreateWindow(width, height, title, NULL, NULL));
+	if (get_GLFW_Window() == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(get_GLFW_Window());
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -48,24 +49,24 @@ void Window::processInput() {
 
 }
 
-void Window::setFrameBufferSizeCallBack(Camera& camera) {
+//void Window::setFrameBufferSizeCallBack(Camera& camera) {
+//
+//	this->camera = camera;
+//	glfwSetFramebufferSizeCallback(window,framBufferSizeCallback)
+//	
+//}
+//
+//void Window::framBufferSizeCallback(GLFWwindow* window, int width, int height) {
+//	glViewport(0, 0, width, height);
+//	camera.width = width;
+//	camera.height = height;
+//
+//}
 
-	this.Camera = camera;
-	glfwSetFramebufferSizeCallback(window,framBufferSizeCallback)
-	
-}
-
-void Window::framBufferSizeCallback(GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
-	camera.width = width;
-	camera.height = height;
-
-}
-
-void Window::setCursorPosCallback() {
-
-	glfwSetCursorPosCallback(window, mouse_callback);
-}
+//void Window::setCursorPosCallback() {
+//
+//	glfwSetCursorPosCallback(window, mouse_callback);
+//}
 
 
 bool Window::shoudlClose() {

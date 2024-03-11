@@ -3,7 +3,6 @@
 
 
 #include "vector"
-#include "../Beta.h"
 #include "../Renderer/EBO.h"
 #include "../Renderer/VAO.h"
 #include "../Scene/Camera.h"
@@ -25,7 +24,7 @@ public:
 	Mesh(vector <Vertex>& vertices, vector <GLuint>& indices, vector<Texture>& textures);
 	~Mesh();
 
-	/*void Draw(Shader& shader, Camera& camera);*/
+	void Draw(Shader& shader, Camera& camera);
 
 
 

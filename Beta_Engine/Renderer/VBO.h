@@ -1,8 +1,8 @@
 #ifndef VBO_H
 #define VBO_H
 
-#include "glm/glm.hpp"
-#include "../third_party/glad/include/glad/glad.h"
+#include "../../third_party/glad/include/glad/glad.h"
+#include <../../third_party/glm/glm/glm.hpp>
 #include "vector"
 using namespace glm;
 using namespace std;

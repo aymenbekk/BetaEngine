@@ -1,7 +1,7 @@
-#ifndef  CEMRA_H
+#ifndef CAMERA_H
 #define CAMERA_H
 
-#include<glad/glad.h>
+#include "../Renderer/Shader.h"
 #include<GLFW/glfw3.h>
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
@@ -9,12 +9,13 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 
-#include "../Renderer/Shader.h"
 
 using namespace glm;
 
 class Camera {
 
+
+public:
 	vec3 Position;
 	vec3 TargetPoint = vec3(0.0f, 1.0f, 0.0f);
 	vec3 Up = vec3(0.0f, 1.0f, 0.0f);

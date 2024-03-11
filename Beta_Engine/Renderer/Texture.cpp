@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION 
 #include "Texture.h"
 
 Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType) {
@@ -41,11 +42,11 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit) {
 
 	//the sampler 2D in the frag shader stores the unit number 
-	GLUnit sampler2D = glGetUniformLocation(shader.ID, uniform);
+	GLuint sampler2D = glGetUniformLocation(shader.ID, uniform);
 
 	shader.Activate();
 
-	glUniformli(sampler2D, unit);
+	glUniform1i(sampler2D, unit);
 
 }
 void Texture::Bind()

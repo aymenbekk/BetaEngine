@@ -2,8 +2,10 @@
 #define WINDOW_H
 
 
-#include <GLFW/glfw3.h>
+#include <iostream>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "../Scene/Camera.h"
 
 
 class Window {
@@ -12,9 +14,10 @@ public:
 
 	
 
-	Window(int width, int Height, const char* title);
+	Window(int width, int Height,  char* title,Camera& camera);
 
-	GLFWwindow* get_GLFW_Window(){return window}
+	GLFWwindow* get_GLFW_Window() { return window; };
+	void set_GLFW_Window(GLFWwindow* windo) { window = windo; };
 
 	int create();
 
