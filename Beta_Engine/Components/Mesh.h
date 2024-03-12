@@ -24,7 +24,7 @@ public:
 	Mesh(vector <Vertex>& vertices, vector <GLuint>& indices, vector<Texture>& textures);
 	~Mesh();
 
-	void Draw(Shader& shader, Camera& camera);
+	void Draw(Shader* shader, Camera& camera);
 
 
 

@@ -17,6 +17,7 @@ class Transform : public Component
 public:
 
 	Transform(vec3& position, vec3& rot, vec3& scale);
+	Transform();
 	mat4 getWorldMatrix() { return worldMatrix; };
 	void setWorldMatrix(mat4& matrix) { worldMatrix = matrix; };
 	mat4 getLocalMatrix();

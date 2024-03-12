@@ -14,22 +14,22 @@ class Engine {
 public :
 
 
-	Engine(vector<Entity*>& scenes,Window& window,Renderer& renderer, vector<pair<const char*, const char*>>& shadersPaths);
+	Engine(Window& window);
 	
 
 	void init();
 
-	void start();
+	void start(Renderer& renderer, vector<Entity* >& scenes);
 
 	
 
 
 private :
 
-	Renderer renderer;
-	vector<Entity* > scenes;
+	//Renderer renderer;
+	//vector<Entity* > scenes;
 	Window window;
-	list<Shader*> shaders;
+	vector<Shader*> shaders;
 	vector<pair<const char*, const char*>> shadersPaths;
 	bool isRuning();
 

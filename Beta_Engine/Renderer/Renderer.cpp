@@ -1,27 +1,46 @@
 #include "Renderer.h"
 
 
-Renderer::Renderer(Camera& camera) :
+Renderer::Renderer(Camera& camera,vector<pair<const char*, const char*>>& shadersPaths) :
 	camera(camera)
 {
 
+	for (const auto& pair : shadersPaths) {
+
+		cout << "first pair" << pair.first << "scond" << pair.second << endl;
+		Shader* shaderProgram = new Shader(pair.first, pair.second);
+		shaderProgram->Activate();
+		shaders.push_back(shaderProgram);
+	}
 }
 
-void Renderer::RenderScene(Entity* root, list<Shader*>& shaderss) {
-	shaders=shaderss;
+void Renderer::RenderScene(Entity* root) {
+	//shaders=shaderss;
 	root->updateSelfAndChild();
-	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-	Draw(root);
+
+	/*Draw(root);*/
+
+	//Shader* target = findShaderByID(e->getShaderIndex());
+
+	//cout << target->ID << endl;
+	//target->Activate();
+	/*printMat4(e->getTransform()->getWorldMatrix());*/
+	//glUniformMatrix4fv(glGetUniformLocation(target->ID, "model"), 1, GL_FALSE, glm::value_ptr(e->getTransform()->getWorldMatrix()));
+	root->getMesh()->Draw(shaders[0], camera);//draw the mesh
 
 }
 
 void Renderer::Draw(Entity* e) {
-	//LZM EL RECURSIVITE
+
 	if (e->getMesh()) {
-		Shader* target = findShaderByID(e->getShaderID());
+		
+		Shader* target = findShaderByID(e->getShaderIndex());
+	
+		//cout << target->ID << endl;
 		target->Activate();
+		/*printMat4(e->getTransform()->getWorldMatrix());*/
 		glUniformMatrix4fv(glGetUniformLocation(target->ID, "model"), 1, GL_FALSE, glm::value_ptr(e->getTransform()->getWorldMatrix()));
-		e->getMesh()->Draw(*target,camera);//draw the mesh
+		e->getMesh()->Draw(shaders[0], camera);//draw the mesh
 	}
 
 	for(Entity* i : e->childs) {
@@ -31,12 +50,17 @@ void Renderer::Draw(Entity* e) {
 }
 
 
-Shader* Renderer::findShaderByID(GLuint ID) {
-	for (Shader* s : shaders) {
-		if (s->ID == ID) {
-			return s;
-		}
-	}
+Shader* Renderer::findShaderByID(size_t Index) {
+	cout << Index << endl;
+	return shaders.at(Index);
 }
 
 
+void printMat4(const glm::mat4& matrix) {
+	for (int row = 0; row < 4; ++row) {
+		for (int col = 0; col < 4; ++col) {
+			std::cout << matrix[row][col] << "\t";
+		}
+		std::cout << std::endl;
+	}
+}

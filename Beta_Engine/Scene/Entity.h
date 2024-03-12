@@ -14,7 +14,7 @@ class Entity {
 
 public:
 
-	Entity(string& tag, GLuint shaderID, Transform* transfor);
+	Entity(const string& tag, size_t shaderIndex, Transform* transfor,Mesh* mesh);
 	
 
 	void AddComponent(Component* c);
@@ -23,7 +23,7 @@ public:
 
 	Mesh* getMesh() { return mesh; };
 
-	GLuint getShaderID() { return shaderID; };
+	size_t getShaderIndex() { return shaderIndex; };
 
 	Transform* getTransform() { return transform; };
 
@@ -32,7 +32,7 @@ public:
 
 private:
 	//el attributes ndirhom pointers surtout ki ykono class bach ki nretrievihom mayetcopawch aya we noptimisi lespace 
-	GLuint shaderID;
+	size_t shaderIndex;
 	string Tag;
 	Transform* transform;
 	Mesh* mesh;

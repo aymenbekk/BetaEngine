@@ -2,10 +2,11 @@
 
 
 
-Entity::Entity(string& tag, GLuint shaderID,Transform* transfor):
+Entity::Entity(const string& tag, size_t shaderIndex, Transform* transfor, Mesh* mesh):
 	Tag(tag),
-	shaderID(shaderID),
-	transform(transfor)
+	shaderIndex(shaderIndex),
+	transform(transfor),
+	mesh(mesh)
 {
 }
 

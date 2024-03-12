@@ -8,14 +8,14 @@
 #include "../Scene/Entity.h"
 using namespace std;
 
-
+void printMat4(const glm::mat4& matrix);
 
 class Renderer {
 
 public:
-	Renderer(Camera& camera);
+	Renderer(Camera& camera, vector<pair<const char*, const char*>>& shadersPaths);
 
-	void RenderScene(Entity* root, list<Shader*>& shaders);
+	void RenderScene(Entity* root);
 
 	void Renderer::Draw(Entity* e);
 
@@ -24,8 +24,8 @@ public:
 	
 private:
 	Camera camera;
-	list<Shader*> shaders;
-	Shader* Renderer::findShaderByID(GLuint ID);
+	vector<Shader*> shaders;
+	Shader* Renderer::findShaderByID(size_t Index);
 
 
 };

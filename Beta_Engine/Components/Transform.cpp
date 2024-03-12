@@ -7,6 +7,9 @@ Transform::Transform(vec3& position, vec3& rot, vec3& scale):
 {
 
 }
+Transform::Transform() {
+
+}
 
 
 mat4 Transform::getLocalMatrix() {
