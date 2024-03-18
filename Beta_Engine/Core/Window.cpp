@@ -8,7 +8,7 @@ Window::Window(int width, int Height,  char* title,Camera& camera) : width(width
 
 
 int Window::create() {
-	cout << "Here Creat" << endl;
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -35,9 +35,8 @@ int Window::create() {
 	
 }
 
-void Window::swapBuffers(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
-	glClearColor(red, green, blue, alpha);
-	glClear(GL_COLOR_BUFFER_BIT);
+void Window::swapBuffers() {
+	
 	glfwSwapBuffers(window);
 }
 

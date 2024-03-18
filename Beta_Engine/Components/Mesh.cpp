@@ -3,10 +3,10 @@
 
 Mesh::Mesh(vector <Vertex>& vertices, vector <GLuint>& indices, vector<Texture>& textures):vertices(vertices),indices(indices),textures(textures) {
 
-	Mesh::vertices = vertices;
-	Mesh::indices = indices;
-	Mesh::textures = textures;
-	cout << "hihihi" << endl;
+	//Mesh::vertices = vertices;
+	//Mesh::indices = indices;
+	//Mesh::textures = textures;
+	
 
 	VAO.Bind();
 
@@ -25,15 +25,13 @@ Mesh::Mesh(vector <Vertex>& vertices, vector <GLuint>& indices, vector<Texture>&
 	VBO.Unbind();
 	EBO.Unbind();
 }
+
+Mesh::Mesh() {
+
+}
 void Mesh::Draw(Shader* shader, Camera& camera)
 {
-	glm::vec3 surfacePos = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::mat4 surfaceModel = glm::mat4(1.0f);
-	surfaceModel = glm::translate(surfaceModel, surfacePos);
-	// Bind shader to be able to access uniforms
-	Shader shaderProgram("assets/shaders/shader.vert", "assets/shaders/shader.frag");
-	glUseProgram(shader->ID);
-	glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(surfaceModel));
+	shader->Activate();
 	VAO.Bind();
 	
 
@@ -41,15 +39,15 @@ void Mesh::Draw(Shader* shader, Camera& camera)
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
 		std::string myString = "texture";
-		textures[i].texUnit(shaderProgram, (myString + std::to_string(i + 1)).c_str(), i);
+		textures[i].texUnit(*shader, (myString + std::to_string(i + 1)).c_str(), i);
 		glActiveTexture(textures[i].Unit);
 		textures[i].Bind();
 	}
 
 
-	camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+	camera.Matrix(45.0f, 0.1f, 100.0f, *shader, "camMatrix");
 
 
-	cout << "item1 " << vertices[0].position.x << "y : " << vertices[1].position.x << endl;
+
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }

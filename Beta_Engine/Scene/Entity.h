@@ -14,7 +14,7 @@ class Entity {
 
 public:
 
-	Entity(const string& tag, size_t shaderIndex, Transform* transfor,Mesh* mesh);
+	Entity(const string& tag, size_t shaderIndex, Transform* transfor,Mesh *mesh);
 	
 
 	void AddComponent(Component* c);
@@ -29,6 +29,12 @@ public:
 
 	vector <Entity*> childs;
 
+	string getTag() { return Tag; };
+
+	Entity* getParent() { return parent; };
+
+	void Entity::updateChilds();
+
 
 private:
 	//el attributes ndirhom pointers surtout ki ykono class bach ki nretrievihom mayetcopawch aya we noptimisi lespace 
@@ -37,7 +43,6 @@ private:
 	Transform* transform;
 	Mesh* mesh;
 	vector <Component* > components;
-
 	Entity* parent = NULL;
 
 

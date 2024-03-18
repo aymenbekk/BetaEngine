@@ -22,9 +22,9 @@ public:
 	VAO VAO;
 
 	Mesh(vector <Vertex>& vertices, vector <GLuint>& indices, vector<Texture>& textures);
-	~Mesh();
+	Mesh();
 
-	void Draw(Shader* shader, Camera& camera);
+	virtual void Draw(Shader* shader, Camera& camera);
 
 
 

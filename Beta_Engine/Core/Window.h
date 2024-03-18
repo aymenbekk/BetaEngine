@@ -21,7 +21,7 @@ public:
 
 	int create();
 
-	void swapBuffers(GLfloat red,GLfloat green,GLfloat blue,GLfloat alpha);
+	void swapBuffers();
 
 	void processInput();
 

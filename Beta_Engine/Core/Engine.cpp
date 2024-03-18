@@ -15,17 +15,6 @@ void Engine::init() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
-	window.swapBuffers(0.07f, 0.13f, 0.17f, 1.0f);
-	cout << "dkhalna" << endl;
-	
-
-	/*for (const auto& pair : shadersPaths) {
-
-		cout << "first pair" << pair.first << "scond" << pair.second << endl;
-		Shader shaderProgram(pair.first, pair.second);
-		shaderProgram.Activate();
-		shaders.push_back(&shaderProgram);
-	}*/
 
 }
 
@@ -33,23 +22,22 @@ void Engine::init() {
 void Engine::start(Renderer& renderer,vector<Entity* >& scenes){
 	
 	glEnable(GL_DEPTH_TEST);
+	
 	while (isRuning()) {
 
-		/*window.processInput();
-		window.swapBuffers(0.07f, 0.13f, 0.17f, 1.0f);*/
+	
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	/*	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);*/ 
+		window.processInput();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
 		renderer.getCamera()->Inputs(window.get_GLFW_Window());
 		for (Entity* root : scenes) {
 			renderer.RenderScene(root);
 		}
-		/*window.swapBuffers(0.07f, 0.13f, 0.17f, 1.0f);
-		window.checkEvents();*/
-		glfwSwapBuffers(window.get_GLFW_Window());
-
-		glfwPollEvents();
+		window.swapBuffers();
+		window.checkEvents();
+	
 	}
 
 	window.Destroy();

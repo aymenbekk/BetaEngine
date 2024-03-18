@@ -33,4 +33,17 @@ void Entity::updateSelfAndChild() {
 
 }
 
+void Entity::updateChilds() {
+
+	for (auto&& child : childs) {
+		if (child->parent) {
+			child->getTransform()->setWorldMatrix(child->parent->transform->getWorldMatrix() * child->getTransform()->getLocalMatrix());
+		}
+		else {
+			child->getTransform()->setWorldMatrix(transform->getLocalMatrix());
+		}
+		child->updateSelfAndChild();
+	}
+
+}
 

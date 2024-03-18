@@ -25,6 +25,8 @@ public:
 	//calculate the world matrix for each entity in a scene (entities and their childs)
 	/*void updateSelfAndChilds();*/
 
+	void setPosition(vec3 pos) { position = pos; };
+
 private:
 
 	vec3 position = { 0.0f,0.0f,0.0f };
