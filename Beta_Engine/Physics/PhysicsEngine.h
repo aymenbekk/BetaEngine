@@ -1,10 +1,13 @@
 #ifndef PHYSICS_ENGINE_INCLUDED_H
 #define PHYSICS_ENGINE_INCLUDED_H
 
-#include "physicsObject.h"
-#include <vector>
+#include "IntersectData.h"
+#include "physicsComponent.h"
+#include <iostream>
 #include "../Math.h"
+#include "vector"
 using namespace glm;
+using namespace std;
 
 class PhysicsEngine
 {
@@ -12,24 +15,24 @@ public:
 
 	PhysicsEngine() {}
 
-	void AddObject(const PhysicsObject& object);
+	void AddComponent( PhysicsComponent* component);
 
 	void Simulate(float delta);
-	void HandleCollisions();
-	void start();
+	void HandleCollisions(double deltaTime);
+	void start(float delta, double deltaTime);
 	
-	inline const PhysicsObject& GetObject(unsigned int index) const
+	inline  PhysicsComponent* GetComponent(unsigned int index)
 	{
-		return objects[index];
+		return components[index];
 	}
-	inline unsigned int GetNumObjects() const
+	inline unsigned int GetNumComponents() const
 	{
-		return (unsigned int)objects.size();
+		return (unsigned int)components.size();
 	}
 
 private:
 
-	std::vector<PhysicsObject> objects;
+	vector<PhysicsComponent*> components;
 };
 
 #endif

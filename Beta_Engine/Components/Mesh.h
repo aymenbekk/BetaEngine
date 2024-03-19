@@ -26,7 +26,7 @@ public:
 
 	virtual void Draw(Shader* shader, Camera& camera);
 
-
+	void update() override;
 
 };
 

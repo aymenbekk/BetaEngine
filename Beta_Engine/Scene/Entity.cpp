@@ -21,6 +21,7 @@ void Entity::AddChild(Entity* e) {
 }
 
 void Entity::updateSelfAndChild() {
+
 	if (parent) {
 		transform->setWorldMatrix(parent->transform->getWorldMatrix() * transform->getLocalMatrix());
 	}
@@ -45,5 +46,19 @@ void Entity::updateChilds() {
 		child->updateSelfAndChild();
 	}
 
+}
+
+
+void Entity::update(Entity* entity) {
+	for (auto&& component : entity->getComponents()) {
+		component->update();
+	}
+}
+
+void Entity::updateAll() {
+	update(this);
+	for (auto&& child : childs) {
+		child->updateAll();
+	}
 }
 

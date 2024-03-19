@@ -26,6 +26,10 @@ mat4 Transform::getLocalMatrix() {
 
 }
 
+
+void Transform::update() {
+
+}
 //void Transform::updateSelfAndChilds() {
 //	if (root->parent) {
 //

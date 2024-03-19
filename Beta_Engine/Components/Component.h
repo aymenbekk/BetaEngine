@@ -8,6 +8,8 @@ class Component {
 public:
 	Component();
 
+	virtual void update()=0;
+
 
 };
 

@@ -19,8 +19,13 @@ public:
 
 	void AddComponent(Component* c);
 	void AddChild(Entity* e);
+	//this to update the world matrices
 	void updateSelfAndChild();
 
+	//this to executue the update function in each component for the complete scene
+	void updateAll();
+	//this to execute the update for each component of one entity of a scene
+	void update(Entity* e);
 	Mesh* getMesh() { return mesh; };
 
 	size_t getShaderIndex() { return shaderIndex; };
@@ -34,6 +39,9 @@ public:
 	Entity* getParent() { return parent; };
 
 	void Entity::updateChilds();
+
+	vector <Component* > getComponents() { return components; };
+
 
 
 private:

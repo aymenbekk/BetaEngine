@@ -14,71 +14,15 @@ Renderer::Renderer(Camera& camera,vector<pair<const char*, const char*>>& shader
 
 void Renderer::RenderScene(Entity* root) {
 	
-	/*root->updateSelfAndChild();*/
+	root->updateAll();
+	root->updateSelfAndChild();
 
 	Draw(root);
 
 }
 
 void Renderer::Draw(Entity* e) {
-	cout << "cam x:" << camera.Position.x << "/" << camera.Position.y << "/" << camera.Position.z << endl;
-	string tag0 = "cube01";//EARTH
-	if (e->getTag() == tag0) {
 
-		glm::vec3 positionA = glm::vec3(e->getTransform()->getWorldMatrix()[3]); //small sube
-		glm::vec3 positionB = glm::vec3(e->getParent()->getTransform()->getWorldMatrix()[3]);
-		float rotationAngle = glm::radians(0.1f);
-		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), rotationAngle, vec3(0.0f, 1.0f, 0.0f));
-
-
-		//Rotate around itself
-		mat4 translateToOriginSelf = translate(mat4(1.0f), -positionA);
-		mat4 translateBackSelf = translate(mat4(1.0f), positionA);
-
-		glm::mat4 modelMatrix1 = translateToOriginSelf * rotationMatrix * translateBackSelf;
-
-		//Rotate aroun sun
-
-		glm::mat4 translationToOrigin = glm::translate(glm::mat4(1.0f), -positionB);
-
-		glm::mat4 translationBack = glm::translate(glm::mat4(1.0f), positionB);
-
-		
-
-		glm::mat4 modelMatrix = translationBack * rotationMatrix * translationToOrigin * e->getTransform()->getWorldMatrix();
-
-
-		e->getTransform()->setWorldMatrix(modelMatrix);
-
-		/*e->updateSelfAndChild();*/
-		e->updateChilds();
-	/*	e->getTransform()->setWorldMatrix(modelMatrix*modelMatrix1);*/
-	}
-
-	//Moon
-	string tag = "cube02";
-	if (e->getTag() == tag ) {
-		glm::vec3 positionA = glm::vec3(e->getTransform()->getWorldMatrix()[3]); //small sube
-		glm::vec3 positionB = glm::vec3(e->getParent()->getTransform()->getWorldMatrix()[3]);
-		float rotationAngle = glm::radians(1.0f);
-		glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), rotationAngle, vec3(0.0f, 1.0f, 0.0f));
-
-
-
-		/*e->updateSelfAndChild();*/
-		
-		glm::mat4 translationToOrigin = glm::translate(glm::mat4(1.0f), - positionB);
-
-		glm::mat4 translationBack = glm::translate(glm::mat4(1.0f), positionB);
-
-		
-		glm::mat4 modelMatrix = translationBack*rotationMatrix * translationToOrigin * e->getTransform()->getWorldMatrix();
-
-
-		e->getTransform()->setWorldMatrix(modelMatrix);
-		
-		/*e->updateSelfAndChild();*/
-	}
 	if (e->getMesh()) {
 		
 		Shader* target = findShaderByID(e->getShaderIndex());

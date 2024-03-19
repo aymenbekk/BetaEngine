@@ -21,11 +21,15 @@ public:
 	mat4 getWorldMatrix() { return worldMatrix; };
 	void setWorldMatrix(mat4& matrix) { worldMatrix = matrix; };
 	mat4 getLocalMatrix();
+	
 
 	//calculate the world matrix for each entity in a scene (entities and their childs)
 	/*void updateSelfAndChilds();*/
 
 	void setPosition(vec3 pos) { position = pos; };
+	vec3 getPosition() { return position; };
+
+	void update() override;
 
 private:
 

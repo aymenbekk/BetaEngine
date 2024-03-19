@@ -51,3 +51,8 @@ void Mesh::Draw(Shader* shader, Camera& camera)
 
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
+
+
+void Mesh::update() {
+
+}

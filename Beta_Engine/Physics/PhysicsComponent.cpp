@@ -1,10 +1,10 @@
 #include "PhysicsComponent.h"
 
 PhysicsComponent::PhysicsComponent(const PhysicsComponent& other) :
-	position(other.m_position),
-	oldPosition(other.m_oldPosition),
-	velocity(other.m_velocity),
-	collider(other.m_collider)
+	position(other.position),
+	oldPosition(other.oldPosition),
+	velocity(other.velocity),
+	collider(other.collider)
 {
 	/*collider->AddReference();*/
 }
@@ -15,13 +15,18 @@ PhysicsComponent::PhysicsComponent(const PhysicsComponent& other) :
 
 void PhysicsComponent::Integrate(float delta)
 {
+	
 	position += velocity * delta;
 }
 
 
 //LZM NACTIVER UPDATE SELF AND CHILDS MATENSACH
-void PhysicsComponent::UpdateEntityParent() {
+void PhysicsComponent::update() {
 	
-	transform->setPosition(position);
+	if (collider->GetType() != Collider::PLANE)
+	{
+		transform->setPosition(position);
+		collider->setCenter(position);
+	};
 
 }

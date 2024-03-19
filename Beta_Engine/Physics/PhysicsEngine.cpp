@@ -3,45 +3,48 @@
 
 
 
-void PhysicsEngine::AddObject(const PhysicsObject& object)
+void PhysicsEngine::AddComponent( PhysicsComponent* component)
 {
-	objects.push_back(object);
+	components.push_back(component);
 }
 
 void PhysicsEngine::Simulate(float delta)
 {
-	for (unsigned int i = 0; i < objects.size(); i++)
+	for (unsigned int i = 0; i < components.size(); i++)
 	{
-		objects[i].Integrate(delta);
+		
+		components[i]->Integrate(delta);
 	}
 }
 
-void PhysicsEngine::HandleCollisions()
+void PhysicsEngine::HandleCollisions(double deltaTime)
 {
-	for (unsigned int i = 0; i < objects.size(); i++)
+
+	double collisionCheckInterval = 0.017;
+	for (unsigned int i = 0; i < components.size(); i++)
 	{
-		for (unsigned int j = i + 1; j < objects.size(); j++)
+		for (unsigned int j = i + 1; j < components.size(); j++)
 		{
 			IntersectData intersectData =
-				objects[i].GetCollider().Intersect(
-					objects[j].GetCollider());
+				components[i]->GetCollider().Intersect(
+					components[j]->GetCollider());
 
-			if (intersectData.GetDoesIntersect())
-			{
-				vec3 direction = intersectData.GetDirection().Normalized();
-				vec3 otherDirection = vec3(direction.Reflect(m_objects[i].GetVelocity().Normalized()));
-				objects[i].SetVelocity(
-					vec3(objects[i].GetVelocity().Reflect(otherDirection)));
+			if (intersectData.GetDoesIntersect() && deltaTime >= collisionCheckInterval)
+			{	
+					/*		if(components[i]->GetCollider().GetType() != Collider::PLANE)*/
+				
+					components[i]->SetVelocity(vec3(components[i]->GetVelocity().x * -1, components[i]->GetVelocity().y * -1, components[i]->GetVelocity().z * -1));
 
-				objects[j].SetVelocity(
-					vec3(objects[j].GetVelocity().Reflect(direction)));
+					//if (components[j]->GetCollider().GetType() != Collider::PLANE)
+					components[j]->SetVelocity(vec3(components[j]->GetVelocity().x * -1, components[j]->GetVelocity().y * -1, components[j]->GetVelocity().z * -1));
+				
 			}
 		}
 	}
 }
 
 
-void PhysicsEngine::start(float delta) {
+void PhysicsEngine::start(float delta,double deltaTime) {
 	Simulate(delta);
-	HandleCollisions();
+	HandleCollisions(deltaTime);
 }

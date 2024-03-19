@@ -29,7 +29,8 @@ public:
 
 
 	void Integrate(float delta);
-	void UpdateEntityParent();
+	//update parent ENtity
+	void update() override;
 
 	inline const vec3 GetPosition() const { return position; }
 
@@ -39,20 +40,20 @@ public:
 	 * Returns a collider in the position of this object, updating the
 	 * collider's position if necessary.
 	 */
-	inline const Collider& GetCollider()
+	inline  Collider& GetCollider()
 	{
 		
-		Vector3f translation = m_position - m_oldPosition;
+		vec3 translation = position - oldPosition;
 	
-		m_oldPosition = m_position;
+		oldPosition = position;
 		
-		m_collider->Transform(translation);
+		collider->Transform(translation);
 
 		return *collider;
 	}
 
 
-	inline void SetVelocity(const vec3 velocit) { velocity = velocit; }
+	inline void SetVelocity( vec3 velocit) { velocity = velocit; }
 
 	
 

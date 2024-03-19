@@ -7,6 +7,7 @@ using namespace std;
 #include "../Renderer/Renderer.h"
 #include "../Scene/Entity.h"
 #include "Window.h"
+#include "../Physics/PhysicsEngine.h"
 
 
 class Engine {
@@ -14,12 +15,12 @@ class Engine {
 public :
 
 
-	Engine(Window& window);
+	Engine(double frameRate,Window& window);
 	
 
 	void init();
 
-	void start(Renderer& renderer, vector<Entity* >& scenes);
+	void start(Renderer& renderer, vector<Entity* >& scenes,PhysicsEngine& physicsEngine);
 
 	
 
@@ -28,6 +29,7 @@ private :
 
 	//Renderer renderer;
 	//vector<Entity* > scenes;
+	double frameTime;
 	Window window;
 	vector<Shader*> shaders;
 	vector<pair<const char*, const char*>> shadersPaths;
