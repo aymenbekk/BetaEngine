@@ -26,6 +26,8 @@ private:
 	vec3 borderFL;
 	vec3 borderFR;
 
+    bool blocks[16][16][16];
+
 	void updateVertices(int& x, int& y, int& z);
 
 

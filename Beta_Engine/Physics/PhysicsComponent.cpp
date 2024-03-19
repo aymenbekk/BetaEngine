@@ -6,7 +6,6 @@ PhysicsComponent::PhysicsComponent(const PhysicsComponent& other) :
 	velocity(other.velocity),
 	collider(other.collider)
 {
-	/*collider->AddReference();*/
 }
 
 
@@ -20,7 +19,7 @@ void PhysicsComponent::Integrate(float delta)
 }
 
 
-//LZM NACTIVER UPDATE SELF AND CHILDS MATENSACH
+
 void PhysicsComponent::update() {
 	
 	if (collider->GetType() != Collider::PLANE)

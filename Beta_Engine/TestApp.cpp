@@ -82,13 +82,13 @@ int main() {
 
 	//Creating the appropriate physics for each entity
 	PhysicsEngine physicsEngine;
-	SphereCollider* sColl = new SphereCollider(vec3(5.0f, 8.0f, 0.0f), 1.0f);
-	PhysicsComponent sphereCompPhys(sColl, vec3(0.0f, -1.0f, 0.0f), sphereEnt.getTransform());
+	SphereCollider* sColl = new SphereCollider(vec3(0.0f, 5.0f, 0.0f), 1.0f);
+	PhysicsComponent sphereCompPhys(sColl, vec3(0.0f, -0.5f, 0.0f), sphereEnt.getTransform());
 
 	SphereCollider* sColl2 = new SphereCollider(vec3(-5.0f, 5.0f, 0.0f), 1.0f);
-	PhysicsComponent sphereCompPhys2(sColl2, vec3(3.0f, 0.0f, 0.0f), sphereEnt.getTransform());
+	PhysicsComponent sphereCompPhys2(sColl2, vec3(0.5f, 0.0f, 0.0f), sphereEnt.getTransform());
 
-	SphereCollider* sColl3 = new SphereCollider(vec3(0.0f, 8.0f, 0.0f), 1.0f);
+	SphereCollider* sColl3 = new SphereCollider(vec3(-5.0f, 8.0f, 0.0f), 1.0f);
 	PhysicsComponent sphereCompPhys3(sColl3, vec3(0.0f, -3.0f, 0.0f), sphereEnt.getTransform());
 
 	PlaneCollider* pColl = new PlaneCollider(vec3(0.0f, 1.0f, 0.0f), 0.0f, chunkMesh.chunkBorders);
@@ -96,11 +96,12 @@ int main() {
 
 	//physicsEngine.AddComponent(&sphereCompPhys);
 	//physicsEngine.AddComponent(&sphereCompPhys2);
-	physicsEngine.AddComponent(&sphereCompPhys3);
+	/*physicsEngine.AddComponent(&sphereCompPhys3);*/
 	physicsEngine.AddComponent(&planeCompPhyis);
-	//sphereEnt.AddComponent(&sphereCompPhys);
-	/*spherEnt2.AddComponent(&sphereCompPhys2);*/
-	spherEnt3.AddComponent(&sphereCompPhys3);
+
+	/*sphereEnt.AddComponent(&sphereCompPhys);*/
+	//spherEnt2.AddComponent(&sphereCompPhys2);
+	//spherEnt3.AddComponent(&sphereCompPhys3);
 	chunkEnt.AddComponent(&planeCompPhyis);
 
 
@@ -114,9 +115,9 @@ int main() {
 	/*Entity* triangleE=new Entity(tag,shaderIndex,transform,triangleMesh);*/
 	/*sun.updateSelfAndChild();*/
 	scenes.push_back(&chunkEnt);
-	//scenes.push_back(&sphereEnt);
+	/*scenes.push_back(&sphereEnt);*/
 	//scenes.push_back(&spherEnt2);
-	scenes.push_back(&spherEnt3);
+	//scenes.push_back(&spherEnt3);
 	engine.start(renderer,scenes,physicsEngine);
 
 

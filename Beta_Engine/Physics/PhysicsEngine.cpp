@@ -20,7 +20,7 @@ void PhysicsEngine::Simulate(float delta)
 void PhysicsEngine::HandleCollisions(double deltaTime)
 {
 
-	double collisionCheckInterval = 0.017;
+	double collisionCheckInterval = 0.009;
 	for (unsigned int i = 0; i < components.size(); i++)
 	{
 		for (unsigned int j = i + 1; j < components.size(); j++)
