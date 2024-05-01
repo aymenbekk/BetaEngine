@@ -29,7 +29,10 @@ public:
 	void setPosition(vec3 pos) { position = pos; };
 	vec3 getPosition() { return position; };
 
-	void update() override;
+	/*void Render() override;*/
+
+	void update() override {};
+
 
 private:
 

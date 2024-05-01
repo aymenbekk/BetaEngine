@@ -11,7 +11,7 @@
 using namespace std;
 
 
-class Mesh : public Component
+class Mesh 
 {
 public:
 
@@ -19,14 +19,14 @@ public:
 	vector <GLuint> indices;
 	vector <Texture> textures;
 
-	VAO VAO;
+	//VAO VAO;
 
 	Mesh(vector <Vertex>& vertices, vector <GLuint>& indices, vector<Texture>& textures);
 	Mesh();
 
-	virtual void Draw(Shader* shader, Camera& camera);
+	//virtual void Draw(Shader* shader, Camera& camera);
 
-	void update() override;
+	//void update() override;
 
 };
 

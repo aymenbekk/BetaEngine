@@ -23,6 +23,8 @@ public:
 
 	void Bind();
 
+	void BindToIndex(int index);
+
 	void Unbind();
 
 	void Delete();

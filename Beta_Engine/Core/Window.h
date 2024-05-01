@@ -14,7 +14,7 @@ public:
 
 	
 
-	Window(int width, int Height,  char* title,Camera& camera);
+	Window(int width, int Height,  char* title,Camera* camera);
 
 	GLFWwindow* get_GLFW_Window() { return window; };
 	void set_GLFW_Window(GLFWwindow* windo) { window = windo; };
@@ -35,15 +35,15 @@ public:
 	void checkEvents();
 
 	void Destroy();
+	GLFWwindow* window;
 
-
-
+	Camera* camera;
 private:
 	int width;
 	int height;
 	char* title;
-	GLFWwindow* window;
-	Camera camera;
+
+	
 
 	void framBufferSizeCallback(GLFWwindow* window, int width, int height);
 	void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);

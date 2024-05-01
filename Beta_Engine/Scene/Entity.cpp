@@ -2,11 +2,10 @@
 
 
 
-Entity::Entity(const string& tag, size_t shaderIndex, Transform* transfor, Mesh* mesh):
+Entity::Entity(const string& tag, size_t shaderIndex, Transform* transfor):
 	Tag(tag),
 	shaderIndex(shaderIndex),
-	transform(transfor),
-	mesh(mesh)
+	transform(transfor)
 {
 }
 
@@ -21,6 +20,8 @@ void Entity::AddChild(Entity* e) {
 }
 
 void Entity::updateSelfAndChild() {
+
+
 
 	if (parent) {
 		transform->setWorldMatrix(parent->transform->getWorldMatrix() * transform->getLocalMatrix());
@@ -62,3 +63,7 @@ void Entity::updateAll() {
 	}
 }
 
+
+void Entity::Draw(Camera& camera, Shader* shader) {
+
+}

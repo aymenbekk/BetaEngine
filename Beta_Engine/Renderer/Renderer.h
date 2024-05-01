@@ -17,7 +17,9 @@ public:
 
 	void RenderScene(Entity* root);
 
-	void Renderer::Draw(Entity* e);
+	void Draw(Entity* e);
+
+	void DrawWorld(Entity* root);
 
 	Camera* getCamera() { return &camera; };
 

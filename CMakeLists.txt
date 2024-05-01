@@ -10,22 +10,24 @@ if (POLICY CMP0141)
 endif()
 
 project ("Beta_Engine")
-
 file(GLOB_RECURSE Beta_EngineSources Beta_Engine/*.cpp Beta_Engine/*.h)
-add_executable(TestApp ${Beta_EngineSources} "Beta_Engine/Renderer/VBO.cpp" "Beta_Engine/Renderer/EBO.cpp")
+add_executable(TestApp ${Beta_EngineSources} )
 
 # Include sub-projects.
 add_subdirectory(third_party/glfw EXCLUDE_FROM_ALL)
 add_subdirectory(third_party/GLAD EXCLUDE_FROM_ALL)
 add_subdirectory(third_party/glm EXCLUDE_FROM_ALL)
-
 # stb_image
-add_library(stb EXCLUDE_FROM_ALL third_party/stb/stb_image.h third_party/stb/stb_image.cpp "Beta_Engine/Renderer/VBO.cpp" "Beta_Engine/Renderer/EBO.cpp")
+add_library(stb EXCLUDE_FROM_ALL third_party/stb/stb_image.h third_party/stb/stb_image.cpp )
 include_directories(stb third_party/stb)
+
+# FastNoise
+add_library(FastNoiseLite EXCLUDE_FROM_ALL third_party/FastNoise/FastNoiseLite.h third_party/FastNoise/FastNoiseLite.cpp )
+include_directories(FastNoiseLite third_party/FastNoise)
 
 #setting up the references for the Beta Engine project this means 
 #the Beta Engine project will reference glfw and glad
-target_link_libraries(TestApp PRIVATE glfw glad glm stb )
+target_link_libraries(TestApp PRIVATE glfw glad glm  stb FastNoiseLite   )
 
 # set a symlink to the assets dir
 add_custom_command(

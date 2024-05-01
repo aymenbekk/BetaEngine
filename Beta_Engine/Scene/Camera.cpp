@@ -6,7 +6,8 @@
 #include"Camera.h"
 
 Camera::Camera(vec3& position, int width, int height) : Position(position),width(width),height(height) {
-
+	this->view = mat4(1.0f);
+	this->projection = mat4(1.0f);
 }
 
 void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shader, const char* uniform)
@@ -20,6 +21,8 @@ void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shade
 	// this is the standard its doesnt change)
 	projection = perspective(radians(FOVdeg), static_cast<float>(width) / static_cast<float>(height), nearPlane, farPlane);
 
+	this->view = view;
+	this->projection = projection;
 	// Exports the camera matrix to the Vertex Shader
 	GLuint camMatrixUnif = glGetUniformLocation(shader.ID, uniform);
 	glUniformMatrix4fv(camMatrixUnif, 1, GL_FALSE, glm::value_ptr(projection * view));
@@ -33,7 +36,7 @@ void Camera::Inputs(GLFWwindow* window)
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 
-	speed = deltaTime * 2.5f;
+	speed = deltaTime * 5.0f;
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
@@ -71,9 +74,6 @@ void Camera::Inputs(GLFWwindow* window)
 
 
 void Camera::ProcessMouseMovement(float xpos, float ypos, GLboolean constrainPitch) {
-	// Hides mouse cursor
-
-
 
 	if (firstClick)
 	{

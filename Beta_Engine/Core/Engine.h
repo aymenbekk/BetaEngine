@@ -15,14 +15,14 @@ class Engine {
 public :
 
 
-	Engine(double frameRate,Window& window);
+	Engine(double frameRate,Window* window);
 	
 
 	void init();
 
 	void start(Renderer& renderer, vector<Entity* >& scenes,PhysicsEngine& physicsEngine);
 
-	
+	void framBufferSizeCallback(GLFWwindow* window, int width, int height);
 
 
 private :
@@ -30,7 +30,7 @@ private :
 	//Renderer renderer;
 	//vector<Entity* > scenes;
 	double frameTime;
-	Window window;
+	Window* window;
 	vector<Shader*> shaders;
 	vector<pair<const char*, const char*>> shadersPaths;
 	bool isRuning();

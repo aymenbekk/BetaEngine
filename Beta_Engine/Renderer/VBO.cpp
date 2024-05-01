@@ -15,6 +15,11 @@ void VBO::Bind()
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
 }
 
+void VBO::BindToIndex(int index) 
+{
+	glBindVertexBuffer(0, ID, 0, sizeof(Vertex));
+}
+
 
 void VBO::Unbind()
 {

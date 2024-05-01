@@ -14,8 +14,8 @@ class Entity {
 
 public:
 
-	Entity(const string& tag, size_t shaderIndex, Transform* transfor,Mesh *mesh);
-	
+	Entity(const string& tag, size_t shaderIndex, Transform* transfor);
+	Entity();
 
 	void AddComponent(Component* c);
 	void AddChild(Entity* e);
@@ -26,7 +26,7 @@ public:
 	void updateAll();
 	//this to execute the update for each component of one entity of a scene
 	void update(Entity* e);
-	Mesh* getMesh() { return mesh; };
+
 
 	size_t getShaderIndex() { return shaderIndex; };
 
@@ -42,14 +42,14 @@ public:
 
 	vector <Component* > getComponents() { return components; };
 
-
+	virtual void Draw(Camera& camera, Shader* shader) ;
+	
 
 private:
 	//el attributes ndirhom pointers surtout ki ykono class bach ki nretrievihom mayetcopawch aya we noptimisi lespace 
 	size_t shaderIndex;
 	string Tag;
 	Transform* transform;
-	Mesh* mesh;
 	vector <Component* > components;
 	Entity* parent = NULL;
 

@@ -16,10 +16,16 @@ class Camera {
 
 
 public:
+	float rotX;
+	float rotY;
+	float rotZ;
+	float moveAt = 0;
 	vec3 Position;
 	vec3 TargetPoint = vec3(0.0f, 1.0f, 0.0f);
 	vec3 Up = vec3(0.0f, 1.0f, 0.0f);
 	mat4 cameraMatrix = mat4(1.0f);
+	mat4 view;
+	mat4 projection;
 	/*vec3 Right;*/
 
 	bool firstClick = true;
