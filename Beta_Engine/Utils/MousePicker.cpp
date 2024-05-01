@@ -37,26 +37,7 @@ glm::vec3 MousePicker::getPointOnRay(glm::vec3 ray, float distance,Camera* camer
     return { start.x + scaledRay.x, start.y + scaledRay.y, start.z + scaledRay.z };
 }
 //
-//glm::vec3 binarySearch(int count, float start, float finish, glm::vec3 ray) {
-//    const int RECURSION_COUNT = 5;
-//    float half = start + ((finish - start) / 2.0f);
-//   // if (count >= RECURSION_COUNT) {
-//   //     glm::vec3 endPoint = getPointOnRay(ray, half);
-//   // /*    Terrain terrain; */
-//   ///*     if (terrain != nullptr) {
-//   //         return endPoint;
-//   //     }*/
-//   //     //else {
-//   //     //    return { 0.0f, 0.0f, 0.0f };
-//   //     //}
-//   // }
-//   // if (intersectionInRange(start, half, ray)) {
-//   //     return binarySearch(count + 1, start, half, ray);
-//   // }
-//   // else {
-//   //     return binarySearch(count + 1, half, finish, ray);
-//   // }
-//}
+
 
 //isTestPointInsideBlock
 
