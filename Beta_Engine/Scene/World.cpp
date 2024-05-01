@@ -96,7 +96,11 @@ void World::Draw(Camera& camera,Shader* shader) {
 
 	if (glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Y) == GLFW_PRESS)
 	{
-		addBlock(glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z - 2));
+		glm::vec3 placingPoint = MPicker->getPointOnRay(MPicker->getCurrentRay(), 2.0f, &camera);
+		addBlock(placingPoint);
+
+		std::cout << "placing point : " << placingPoint.x << "/" << placingPoint.y << "/" << placingPoint.z << endl;
+
 	}
 	
 	

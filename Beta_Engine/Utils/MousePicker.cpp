@@ -20,16 +20,6 @@ void MousePicker::update(Camera* camera) {
 
 	/*std::cout << "CURRENT RAY : " << currentRay.x << "/" << currentRay.y << "/" << currentRay.z << endl;*/
 
-   /* getPointOnRay(currentRay, 0,camera);
-    getPointOnRay(currentRay, 10, camera);*/
-
-    //if (intersectionInRange(0, 10, currentRay,camera)) {
-    //    currentTerrainPoint = binarySearch(0, 0, RAY_RANGE, currentRay);
-    //}
-    //else {
-    //    currentTerrainPoint = null;
-    //}
-
 }
 
 
@@ -68,18 +58,6 @@ glm::vec3 MousePicker::getPointOnRay(glm::vec3 ray, float distance,Camera* camer
 //   // }
 //}
 
-//normalement nsemiha isTestPointInsideBlock
-//bool isUnderGround(glm::vec3 testPoint) {
-//    /* Terrain terrain; */
-//    float height = 0;
-//    //if (terrain != nullptr) {
-//    //    height = terrain.getHeightOfTerrain(testPoint.x, testPoint.z);
-//    //}
-//    return testPoint.y < height;
-//}
-//bool intersectionInRange(float start, float finish, glm::vec3 ray, Camera* camera) {
-//    glm::vec3 startPoint = getPointOnRay(ray, start,camera);
-//    glm::vec3 endPoint = getPointOnRay(ray, finish,camera);
-//    return !isUnderGround(startPoint) && isUnderGround(endPoint);
-//}
+//isTestPointInsideBlock
+
 
