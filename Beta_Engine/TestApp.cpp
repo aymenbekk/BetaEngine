@@ -7,7 +7,7 @@
 
 int main() {
 
-	glm::vec3 camPos = glm::vec3(0.0f, 6.0f, 20.0f);
+	glm::vec3 camPos = glm::vec3(2.0f, 6.0f, 2.0f);
 	Camera camera(camPos, 800, 800);
 	Window* window=new Window(800, 800, "Beta Engine", &camera);
 	

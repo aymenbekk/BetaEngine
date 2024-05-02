@@ -91,8 +91,8 @@ void World::Draw(Camera& camera,Shader* shader) {
 	MPicker->update(&camera);
 
 
-	generateChunks(camera.Position, 2.0f);
-	//deleteChunks(camera.Position, 2.0f);
+	/*generateChunks(camera.Position, 2.0f);*/
+	
 
 	if (glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Y) == GLFW_PRESS)
 	{
@@ -104,7 +104,8 @@ void World::Draw(Camera& camera,Shader* shader) {
 	}
 	
 	
-	/*generateChunks(camera.Position,2.0f);*/
+	generateChunks(camera.Position,1.0f);
+	/*deleteChunks(camera.Position, 2.0f);*/
 	
 	std::string myString = "texture1";
 	soilText->texUnit(*shader, myString.c_str(), 0);
@@ -199,19 +200,23 @@ void World::generateDrawCommands() {
 
 
  void World::generateChunks(const glm::vec3& ccamPos, float range) {
-
+	
+	 std::cout << loadedChunks.size() << endl;
 	 glm::vec3 min = ccamPos - glm::vec3(range);
 	 glm::vec3 max = ccamPos + glm::vec3(range);
-	 for (int x = (int) min.x; x <= (int) max.x; x += 16) {
-			 for (int z = (int) min.z; z <= (int) max.z; z += 16) {
-
-				 glm::vec3 chunkPosition(x, 0.0f, z);
+	 std::cout << "min : " << min.x << "/" << min.y << "/" << min.z << endl;
+	 for (int x = min.x; x <= max.x; x +=1) {
+			 for (int z = min.z; z <= max.z; z+=1) {
+				 printf("CCCCCC");
+				 glm::vec3 chunkPosition(x*16, 0.0f, z*16);
 				 if (isChunkExist(chunkPosition) == false) {
 					 load(chunkPosition);
 				 }
 			 }
 	 }
 
+	 printf("SIZE.\n" );
+	 std::cout << loadedChunks.size() << endl;
 
  }
 
@@ -226,26 +231,9 @@ void World::generateDrawCommands() {
 	 for (int x = 0; x < 5; x++) {
 		 for (int z = 0; z < 5; z++) {
 
-			 if (x == 0 && z == 0)
-			 {
-
-				 positionn = { (float)x,0.0f,(float)z };
-			 }
-			 else if (x == 0 && z == 0)
-			 {
-
-				 positionn = { (float)x * 16,0.0f,(float)z };
-			 }
-			 else if (x == 0 && z == 0)
-			 {
-
-				 positionn = { (float)x ,0.0f,(float)z * 16 };
-			 }
-			 else
-			 {
-
+			 
 				 positionn = { (float)x * 16 ,0.0f,(float)z * 16 };
-			 }
+		
 
 			 eulerRotation = { 0.0f,0.0f,0.0f };
 			 scale = { 1.0f,1.0f,1.0f };
@@ -270,6 +258,7 @@ void World::generateDrawCommands() {
 	 for (int i = 0; i < loadedChunks.size(); i++) {
 		 if (loadedChunks.at(i) == position)
 		 {
+			 printf("dkhalna.\n");
 			 return true;
 		 }
 	 }
@@ -278,6 +267,8 @@ void World::generateDrawCommands() {
  }
 
  void World::load(glm::vec3 position) {
+
+	 std::cout << "Position" << position.x << "/" << position.y << "/" << position.z << endl;
 	 size_t shaderIndex = 0;
 	 glm::vec3 eulerRotation = { 0.0f,0.0f,0.0f };
 	 glm::vec3 scale = { 1.0f,1.0f,1.0f };
@@ -295,7 +286,9 @@ void World::generateDrawCommands() {
  void World::deleteChunks(const glm::vec3& center, float range) {
 	 for (int i = 0; i < loadedChunks.size(); i++) {
 		 glm::vec3 chunkPosition = loadedChunks.at(i);
-		 if (glm::distance(chunkPosition, center) > range) {
+		 if (glm::distance(glm::vec3(chunkPosition.x,0,chunkPosition.z), center) > range) {
+			 printf("deleted.\n");
+			 std::cout << "distance : " << glm::distance(chunkPosition, center) << endl;
 			 unload(chunkPosition);
 			 loadedChunks.erase(loadedChunks.begin() + i);
 			 
