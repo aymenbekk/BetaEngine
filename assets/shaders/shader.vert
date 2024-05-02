@@ -17,7 +17,11 @@ out vec2 texCoord;
 uniform mat4 camMatrix;
 
 uniform mat4 model;
-vec3 crntPos;
+out vec3 crntPos;
+
+out vec3 pos;
+
+out vec3 Normal;
 
 void main()
 {
@@ -29,4 +33,10 @@ void main()
 	
 	
 	gl_Position =  camMatrix * model * vec4(aPos, 1.0);
+
+	pos=aPos;
+
+	Normal = aColor;
+
+
 }

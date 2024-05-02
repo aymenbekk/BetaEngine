@@ -23,6 +23,7 @@ public:
 
 	Camera* getCamera() { return &camera; };
 
+	vector<Shader*> getShaders() { return shaders; };
 	
 private:
 	Camera camera;

@@ -4,6 +4,7 @@
 #include "./Physics/SphereCollider.h"
 #include "./Physics/PlaneCollider.h"
 #include "Scene/World.h"
+#include "Components/MeshRenderer.h"
 
 int main() {
 
@@ -13,6 +14,7 @@ int main() {
 	
 	vector<pair<const char*, const char*>> shadersPaths;
 	shadersPaths.push_back(make_pair("assets/shaders/shader.vert", "assets/shaders/shader.frag"));
+	shadersPaths.push_back(make_pair("assets/shaders/shader.vert", "assets/shaders/light.frag"));
 	vector<Entity*> scenes;
 
 	
@@ -53,34 +55,44 @@ int main() {
 
 	Engine engine(60,window);
 	engine.init();
+	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	Renderer renderer(camera, shadersPaths);
+	glUniform4f(glGetUniformLocation(renderer.getShaders().at(1)->ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	
 	
 
 	//Creating meshes
-	//sphere sphere(1.0f, 20, 30);
-	//sphere.createSphere();
-	//vector<Texture> textures;
-	//////Mesh* cubeMesh = new Mesh(cubeVertices, indices, textures);
-	//Mesh* sphereMesh = new Mesh(sphere.vertices, sphere.indices, textures);
-	//Mesh* triangleMesh = new Mesh(triangle, indices2, textures);
-	////Creating Entit.es
-	//const string tag1 = "sphere";
-	//const string tag2 = "chunk";
+	sphere sphere(1.0f, 20, 30);
+	sphere.createSphere();
+	vector<Texture> textures;
+	Mesh* sphereMesh = new Mesh(sphere.vertices, sphere.indices, textures);
+
+
+	const string tag1 = "sphere";
 	const string tag3 = "world";
 	size_t shaderIndex = 0;
+	size_t shaderIndex2 = 1;
 
-	vec3 position = { 0.0f,0.0f,0.0f };
+	vec3 positionSpher = { 0.0f,12.0f,-25.0f };
+	vec3 position = { -8.0f,0.0f,0.0f };
 	vec3 eulerRotation = { 0.0f,0.0f,0.0f };
 	vec3 scale = { 1.0f,1.0f,1.0f };
+	renderer.getShaders().at(0)->Activate();
+	glUniform4f(glGetUniformLocation(renderer.getShaders().at(0)->ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	glUniform3f(glGetUniformLocation(renderer.getShaders().at(0)->ID, "lightPos"), positionSpher.x, positionSpher.y, positionSpher.z);
+	glUniform3f(glGetUniformLocation(renderer.getShaders().at(0)->ID, "camPos"),camera.Position.x, camera.Position.y, camera.Position.z);
 	////position the cubeChild with +2 to the X of its parent and scale oof 75% of parent
 	Transform* transform = new Transform(position,eulerRotation,scale);
-	//Transform* transformSpher = new Transform();
+	Transform* transformSphere = new Transform(positionSpher, eulerRotation, scale);
+	
 	//ChunkMesh chunkMesh;
 	//Entity chunkEnt(tag2, shaderIndex, transform, &chunkMesh);
-	//Entity sphereEnt(tag1, shaderIndex, transformSpher, sphereMesh);
+	 Entity sphereEnt(tag1, shaderIndex2, transformSphere);
+	 MeshRenderer* M_Renderer = new MeshRenderer(sphereMesh);
 	//Entity spherEnt2(tag1, shaderIndex, transformSpher, sphereMesh);
 	//Entity spherEnt3(tag1, shaderIndex, transformSpher, sphereMesh);
 
+	 sphereEnt.AddComponent(M_Renderer);
 
 	//ybanli lerreur kan puisque ki kont npassi el window hna kanet 9bel matetcriya 
 	World world(tag3, shaderIndex, transform);
@@ -125,7 +137,9 @@ int main() {
 	//scenes.push_back(&spherEnt2);
 	//scenes.push_back(&spherEnt3);
 
+	scenes.push_back(&sphereEnt);
 	scenes.push_back(&world);
+	
 	engine.start(renderer,scenes,physicsEngine);
 
 

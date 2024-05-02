@@ -11,7 +11,9 @@ public:
 	MeshRenderer(Mesh* mesh) ;
 	MeshRenderer();
 
-	//void Render(Shader* shader, Camera& camera) override;
+	void update() override {};
+
+	void Render(Shader* shader, Camera& camera) override;
 	VAO VAO;
 
 private:

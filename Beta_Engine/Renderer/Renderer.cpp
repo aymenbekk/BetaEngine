@@ -42,15 +42,11 @@ void Renderer::Draw(Entity* e) {
 	glUniformMatrix4fv(glGetUniformLocation(target->ID, "model"), 1, GL_FALSE, glm::value_ptr(e->getTransform()->getWorldMatrix()));
 	//e->getMesh()->Draw(target, camera);//draw the mesh
 
-	//for (Component* c : e->getComponents()) {
-	//	if (dynamic_cast<MeshRenderer*>(c) == nullptr) {
-	//		c->Render();
-	//	}
-	//	else {
-	//		dynamic_cast<MeshRenderer*>(c)->Render(target, camera);
-	//	}
-	//	
-	//}
+	for (Component* c : e->getComponents()) {
+	
+			c->Render(target, camera);
+		
+	}
 	
 
 	for(Entity* i : e->childs) {

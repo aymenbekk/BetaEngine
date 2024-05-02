@@ -23,25 +23,27 @@ MeshRenderer::MeshRenderer(Mesh* mesh):mesh(mesh) {
 	EBO.Unbind();
 }
 
-//void MeshRenderer::Render(Shader* shader, Camera& camera)
-//{
-//	//shader->Activate();
-//	//VAO.Bind();
-//
-//
-//
-//	//for (unsigned int i = 0; i < meshtextures.size(); i++)
-//	//{
-//	//	std::string myString = "texture";
-//	//	textures[i].texUnit(*shader, (myString + std::to_string(i + 1)).c_str(), i);
-//	//	glActiveTexture(textures[i].Unit);
-//	//	textures[i].Bind();
-//	//}
-//
-//
-//	//camera.Matrix(45.0f, 0.1f, 100.0f, *shader, "camMatrix");
-//
-//
-//
-//	//glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-//}
+void MeshRenderer::Render(Shader* shader, Camera& camera)
+{
+
+	printf("we here .\n");
+	shader->Activate();
+	VAO.Bind();
+
+
+
+	for (unsigned int i = 0; i < mesh->textures.size(); i++)
+	{
+		std::string myString = "texture";
+		mesh->textures[i].texUnit(*shader, (myString + std::to_string(i + 1)).c_str(), i);
+		glActiveTexture(mesh->textures[i].Unit);
+		mesh->textures[i].Bind();
+	}
+
+
+	camera.Matrix(45.0f, 0.1f, 100.0f, *shader, "camMatrix");
+
+
+
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+}
