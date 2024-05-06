@@ -26,7 +26,6 @@ MeshRenderer::MeshRenderer(Mesh* mesh):mesh(mesh) {
 void MeshRenderer::Render(Shader* shader, Camera& camera)
 {
 
-	printf("we here .\n");
 	shader->Activate();
 	VAO.Bind();
 

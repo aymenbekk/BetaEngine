@@ -97,7 +97,9 @@ void World::Draw(Camera& camera,Shader* shader) {
 	if (glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Y) == GLFW_PRESS)
 	{
 		glm::vec3 placingPoint = MPicker->getPointOnRay(MPicker->getCurrentRay(), 2.0f, &camera);
-		chunks[chunks.size()-3]->addBlock(placingPoint);
+		
+	
+		chunks[0]->addBlock(placingPoint);
 
 		std::cout << "placing point : " << placingPoint.x << "/" << placingPoint.y << "/" << placingPoint.z << endl;
 
@@ -119,10 +121,7 @@ void World::Draw(Camera& camera,Shader* shader) {
 		glDrawArrays(GL_TRIANGLES, 0, chunks[i]->vertices.size());
 	}
 
-	if (addedBlocks.size() != 0) {
-		glUniformMatrix4fv(glGetUniformLocation(shader->ID, "model"), 1, GL_FALSE, glm::value_ptr(childs[childs.size()-1]->getTransform()->getWorldMatrix()));
-		DrawNewBlocks();
-	}
+
 	
 }
 
@@ -201,22 +200,16 @@ void World::generateDrawCommands() {
 
  void World::generateChunks(const glm::vec3& ccamPos, float range) {
 	
-	 std::cout << loadedChunks.size() << endl;
-	 glm::vec3 min = ccamPos - glm::vec3(range);
-	 glm::vec3 max = ccamPos + glm::vec3(range);
-	 std::cout << "min : " << min.x << "/" << min.y << "/" << min.z << endl;
+	 glm::vec3 min = glm::vec3(ccamPos.x-1.0f,ccamPos.y,ccamPos.z-4.0f) - glm::vec3(range);
+	 glm::vec3 max = glm::vec3(ccamPos.x-1.0f, ccamPos.y, ccamPos.z - 4.0f) + glm::vec3(range);
 	 for (int x = min.x; x <= max.x; x +=1) {
-			 for (int z = min.z; z <= max.z; z+=1) {
-				 printf("CCCCCC");
+			 for (int z = max.z; z >= min.z; z -=1) {
 				 glm::vec3 chunkPosition(x*16, 0.0f, z*16);
 				 if (isChunkExist(chunkPosition) == false) {
 					 load(chunkPosition);
 				 }
 			 }
 	 }
-
-	 printf("SIZE.\n" );
-	 std::cout << loadedChunks.size() << endl;
 
  }
 
@@ -232,8 +225,7 @@ void World::generateDrawCommands() {
 		 for (int z = 0; z < 5; z++) {
 
 			 
-				 positionn = { (float)x * 16 ,0.0f,(float)z * 16 };
-		
+			 positionn = { (float)x * 16 ,0.0f,(float)z * 16 };
 
 			 eulerRotation = { 0.0f,0.0f,0.0f };
 			 scale = { 1.0f,1.0f,1.0f };
@@ -241,8 +233,6 @@ void World::generateDrawCommands() {
 
 
 			 const string tag2 = "chunk/" + std::to_string(x) + "/" + std::to_string(z);
-
-			 printf("dkhalna .\n");
 			 ChunkMesh* chunkMesh = new ChunkMesh();
 			 chunks.push_back(chunkMesh);
 			
@@ -258,7 +248,6 @@ void World::generateDrawCommands() {
 	 for (int i = 0; i < loadedChunks.size(); i++) {
 		 if (loadedChunks.at(i) == position)
 		 {
-			 printf("dkhalna.\n");
 			 return true;
 		 }
 	 }
@@ -268,7 +257,6 @@ void World::generateDrawCommands() {
 
  void World::load(glm::vec3 position) {
 
-	 std::cout << "Position" << position.x << "/" << position.y << "/" << position.z << endl;
 	 size_t shaderIndex = 0;
 	 glm::vec3 eulerRotation = { 0.0f,0.0f,0.0f };
 	 glm::vec3 scale = { 1.0f,1.0f,1.0f };
@@ -287,8 +275,7 @@ void World::generateDrawCommands() {
 	 for (int i = 0; i < loadedChunks.size(); i++) {
 		 glm::vec3 chunkPosition = loadedChunks.at(i);
 		 if (glm::distance(glm::vec3(chunkPosition.x,0,chunkPosition.z), center) > range) {
-			 printf("deleted.\n");
-			 std::cout << "distance : " << glm::distance(chunkPosition, center) << endl;
+
 			 unload(chunkPosition);
 			 loadedChunks.erase(loadedChunks.begin() + i);
 			 
@@ -314,70 +301,67 @@ void World::generateDrawCommands() {
 
 
 
- void World::addBlock(glm::vec3 position) {
+ //void World::addBlock(glm::vec3 position) {
+
+	// printf("dkhalna .`\n");
+	// vector<Vertex> FaceVertices;
+	// FaceVertices = Block::getBlockFace(BlockFace::Front);
+
+	// for (int i = 0; i < 6; i++) {
+	//	 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
+	//	 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
+	// }
+
+	// FaceVertices = Block::getBlockFace(BlockFace::Back);
+
+	// for (int i = 0; i < 6; i++) {
+	//	 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
+	//	 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
+
+	// }
+
+	// FaceVertices = Block::getBlockFace(BlockFace::Top);
+
+	// for (int i = 0; i < 6; i++) {
+	//	 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
+	//	 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
+
+	// }
+
+	// FaceVertices = Block::getBlockFace(BlockFace::Bottom);
+
+	// for (int i = 0; i < 6; i++) {
+	//	 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
+	//	 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
+
+	// }
+
+	// FaceVertices = Block::getBlockFace(BlockFace::Left);
+
+	// for (int i = 0; i < 6; i++) {
+	//	 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
+	//	 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
+
+	// }
 
 
-	 vector<Vertex> FaceVertices;
+	// FaceVertices = Block::getBlockFace(BlockFace::Right);
 
-	 printf("dkhalna .\n");
-	 FaceVertices = Block::getBlockFace(BlockFace::Front);
+	// for (int i = 0; i < 6; i++) {
+	//	 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
+	//	 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
 
-	 for (int i = 0; i < 6; i++) {
-		 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
-		 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
+	// }
+	//
+ //}
+
+
+
+ void World::printMat4(const glm::mat4& matrix) {
+	 for (int i = 0; i < 4; ++i) {
+		 for (int j = 0; j < 4; ++j) {
+			 std::cout << matrix[i][j] << " ";
+		 }
+		 std::cout << std::endl;
 	 }
-
-	 FaceVertices = Block::getBlockFace(BlockFace::Back);
-
-	 for (int i = 0; i < 6; i++) {
-		 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
-		 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
-
-	 }
-
-	 FaceVertices = Block::getBlockFace(BlockFace::Top);
-
-	 for (int i = 0; i < 6; i++) {
-		 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
-		 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
-
-	 }
-
-	 FaceVertices = Block::getBlockFace(BlockFace::Bottom);
-
-	 for (int i = 0; i < 6; i++) {
-		 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
-		 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
-
-	 }
-
-	 FaceVertices = Block::getBlockFace(BlockFace::Left);
-
-	 for (int i = 0; i < 6; i++) {
-		 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
-		 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
-
-	 }
-
-
-	 FaceVertices = Block::getBlockFace(BlockFace::Right);
-
-	 for (int i = 0; i < 6; i++) {
-		 vec3 pos = vec3(FaceVertices[i].position.x + (position.x), FaceVertices[i].position.y + (position.y), FaceVertices[i].position.z + (position.z));
-		 addedBlocks.push_back(Vertex{ pos, FaceVertices[i].color, FaceVertices[i].texUV });
-
-	 }
-	
- }
-
- void World::DrawNewBlocks() {
-	 Newvao.Bind();
-	 VBO vbo(addedBlocks);
-
-	 Newvao.LinkAttrib(vbo, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
-	 Newvao.LinkAttrib(vbo, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
-	 Newvao.LinkAttrib(vbo, 2, 2, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
-
-	 glDrawArrays(GL_TRIANGLES, 0, addedBlocks.size());
-
  }

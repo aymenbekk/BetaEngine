@@ -35,6 +35,7 @@ public:
 	void generateStaticTerrain();
 
 	void DrawNewBlocks();
+	void printMat4(const glm::mat4& matrix);
 
 private:
 	VAO Newvao;
@@ -60,10 +61,7 @@ private:
 
 	std::vector<glm::vec3> loadedChunks;
 
-	vector<Vertex> addedBlocks;
-
-
-
+	
 };
 
 

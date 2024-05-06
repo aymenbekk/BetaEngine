@@ -5,8 +5,10 @@
 std::vector<std::vector<float>> Noise::generateNoise() {
 
 	FastNoiseLite noise;
+	noise.SetFractalOctaves(5);
+	noise.SetFractalLacunarity(1.75);
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
-	noise.SetFrequency(0.05);
+	noise.SetFractalType(FastNoiseLite::FractalType_FBm);
 	noise.SetSeed(Noise::getSeed());
 
 	std::vector<std::vector<float>> noiseData;

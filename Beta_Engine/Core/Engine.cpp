@@ -23,17 +23,36 @@ void Engine::init() {
 
 void Engine::start(Renderer& renderer,vector<Entity* >& scenes , PhysicsEngine& physicsEngine){
 	
-	
+	printf("Running Engine....\n");
 	double lastTime = glfwGetTime();
 	double deltaTime = 0.0;
 	int camWidth = renderer.getCamera()->width;
 	int camHeight = renderer.getCamera()->height;
 
 	glEnable(GL_DEPTH_TEST);
-	
+	glEnable(GL_FRONT);
+	glFrontFace(GL_CW);
+	double prevTime = 0.0;
+	double crntTime = 0.0;
+	double timeDiff;
+	unsigned int counter = 0;
+
 	while (isRuning()) {
 
 	
+
+
+		crntTime = glfwGetTime();
+		timeDiff = crntTime - prevTime;
+		counter++;
+		if (timeDiff >= 1.0 / 30.0) {
+			string FPS = to_string((1.0 / timeDiff) * counter);
+			string title = "project :  " + FPS;
+			glfwSetWindowTitle(glfwGetCurrentContext(), title.c_str());
+			prevTime = crntTime;
+			counter = 0;
+
+		}
 
 
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
